@@ -1,0 +1,7 @@
+/.vscode
+*~
+.pdm-python
+**/__pypackages__/
+.env
+development.env
+production.env

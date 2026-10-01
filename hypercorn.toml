@@ -1,0 +1,8 @@
+# this prints the logs and then sets a format for it
+# this helps to know if things are running
+accesslog = "-"
+access_log_format = "%(t)s %(h)s %(f)s - %(S)s '%(r)s' %(s)s %(b)s %(D)s"
+# this tells hypercorn which port to bind to - NECESSARY
+# bind = "0.0.0.0:8080" # this is the usual setup
+# prints error logs
+errorlog = "-"

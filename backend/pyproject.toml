@@ -1,0 +1,85 @@
+[project]
+name = "staff-bjj-app"
+version = "0.1.0"
+description = "Direct debit CRM App"
+authors = [
+    {name = "barbara.hale", email = "halebdev@gmail.com"},
+]
+dependencies = [
+    "quart>=0.20.0",
+    "asyncpg>=0.30.0",
+    "quart-db>=0.9.0",
+    "quart-schema>=0.21.0",
+    "sql-tstring>=0.2.0",
+    "sql-tstring @ git+https://github.com/pgjones/sql-tstring.git@main",
+    "pydantic[email]>=2.10.6",
+    "python-dotenv>=1.0.1",
+    "hypercorn>=0.17.3",
+    "quart-auth>=0.11.0",
+    "bcrypt>=4.2.1",
+    "zxcvbn>=4.4.28",
+    "itsdangerous>=2.2.0",
+    "quart-rate-limiter>=0.11.0",
+    "httpx>=0.28.1",
+    "google-api-python-client>=2.172.0",
+    "google-auth>=2.40.3",
+    "aioboto3>=15.0.0",
+    "gocardless-pro>=3.3.0",
+    "quart-tasks>=0.5.0",
+    "sentry-sdk>=2.48.0",
+    ]
+requires-python = "==3.13.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[dependency-groups]
+dev = [
+    "black>=24.10.0",
+    "isort>=5.13.2",
+    "djhtml>=3.0.7",
+    "mypy>=1.14.1",
+    "flake8>=7.1.1",
+    "bandit>=1.8.0",
+    "pytest>=8.3.4",
+    "pytest-asyncio>=0.25.2",
+    "freezegun>=1.5.1",
+    "types-aiofiles>=24.1.0.20250606",
+]
+
+[tool]
+[tool.bandit]
+skips = ["B101"]
+
+[tool.black]
+target-version = ["py313"] 
+[tool.isort]
+profile = "black"
+
+[tool.pdm]
+distribution = false
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.pdm.scripts]
+start = { cmd = "quart --app src/backend/run.py run --port 5050", env_file = "development.env" }
+recreate-db-base = "quart --app src/backend/run.py recreate_db"
+recreate-db = { composite = ["recreate-db-base"], env_file = "development.env" }
+test = { composite = ["recreate-db-base", "pytest -s -vv tests/"], env_file = "testing.env"}
+format-black = "black src/ tests/"
+format-djhtml = "djhtml src/backend/templates -t 2"
+format-isort = "isort src tests"
+format = {composite = ["format-black", "format-djhtml", "format-isort"]}
+lint-bandit = "bandit -c pyproject.toml -r src/"
+lint-black = "black --check --diff src/ tests/"
+lint-djhtml = "djhtml src/backend/templates -t 2 --check"
+lint-flake8 = "flake8 src/ tests/"
+lint-isort = "isort --check --diff src tests"
+lint-mypy = "mypy src/backend tests"
+lint = {composite = ["lint-bandit", "lint-black", "lint-djhtml", "lint-flake8", "lint-isort", "lint-mypy"]}
+
+[tool.pytest.ini_options]
+addopts = "-s -vv --showlocals"
+asyncio_mode = "auto"
+pythonpath = ["src"]
