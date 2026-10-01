@@ -17,7 +17,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <HelmetProvider>
         <Helmet>
-          <title>BJJ Staff App</title>
+          <title>CRM App</title>
         </Helmet>
         <ThemeProvider>
           <ToastContextProvider>

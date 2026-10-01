@@ -5,7 +5,7 @@ async def test_session_flow(app: Quart) -> None:
     test_client = app.test_client()
     await test_client.post(
         "/v1/sessions/",
-        json={"email": "test@oxfordbjj.com", "password": "password"},
+        json={"email": "test@crmapp.com", "password": "password"},
     )
     response = await test_client.get("/v1/sessions/")
     assert (await response.get_json())[
@@ -20,7 +20,7 @@ async def test_login_invalid_password(app: Quart) -> None:
     test_client = app.test_client()
     await test_client.post(
         "/v1/sessions/",
-        json={"email": "test@oxfordbjj.com", "password": "incorrect"},
+        json={"email": "test2@crmapp.com", "password": "incorrect"},
     )
     response = await test_client.get("/v1/sessions/")
     assert response.status_code == 401

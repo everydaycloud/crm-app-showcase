@@ -21,7 +21,7 @@ const TopBar = () => {
           {authenticated ? <TemporaryDrawer /> : null}
           <Box sx={{ flexGrow: 1 }}>
             <Button color="inherit" component={Link} to="/">
-              Republic App
+              CRM App
             </Button>
           </Box>
           {authenticated ? <AccountMenu /> : null}

@@ -1,5 +1,5 @@
 [project]
-name = "staff-bjj-app"
+name = "crm-app"
 version = "0.1.0"
 description = "Direct debit CRM App"
 authors = [
@@ -52,7 +52,7 @@ dev = [
 skips = ["B101"]
 
 [tool.black]
-target-version = ["py313"] 
+target-version = ["py313"]
 [tool.isort]
 profile = "black"
 
@@ -63,9 +63,9 @@ distribution = false
 ignore_missing_imports = true
 
 [tool.pdm.scripts]
-start = { cmd = "quart --app src/backend/run.py run --port 5050", env_file = "development.env" }
+start = { cmd = "quart --app src/backend/run.py run --port 5050", env_file = "testing.env" }
 recreate-db-base = "quart --app src/backend/run.py recreate_db"
-recreate-db = { composite = ["recreate-db-base"], env_file = "development.env" }
+recreate-db = { composite = ["recreate-db-base"], env_file = "testing.env" }
 test = { composite = ["recreate-db-base", "pytest -s -vv tests/"], env_file = "testing.env"}
 format-black = "black src/ tests/"
 format-djhtml = "djhtml src/backend/templates -t 2"

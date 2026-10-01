@@ -39,7 +39,7 @@ const useLogin = () => {
       if (error.response?.status === 401) {
         addToast("Invalid credentials", "error");
       } else {
-        addToast("Try again", "error");
+        addToast(`Try again: ${error.response.status}`, "error");
       }
     }
   };

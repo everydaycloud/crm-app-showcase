@@ -11,13 +11,13 @@ from backend.blueprints.staff import EMAIL_VERIFICATION_SALT
 async def test_register(app: Quart, caplog: pytest.LogCaptureFixture) -> None:
     test_client = app.test_client()
     data = {
-        "email": "test2@oxfordbjj.com",
+        "email": "test2@crmapp.com",
         "password": "testPassword2$",
     }
     await test_client.post("/v1/staff/", json=data)
     response = await test_client.post("/v1/sessions/", json=data)
     assert response.status_code == 200
-    assert "Sending welcome.html to test2@oxfordbjj.com" in caplog.text
+    assert "Sending welcome.html to test2@crmapp.com" in caplog.text
 
 
 @pytest.mark.parametrize(
@@ -43,42 +43,9 @@ async def test_verify_email_invalid_token(app: Quart) -> None:
     assert response.status_code == 400
 
 
-# async def test_change_password(
-#      app: Quart,
-#      caplog: pytest.LogCaptureFixture,
-#      staff_authenticated_client: TestClientProtocol,
-#  ) -> None:
-#      test_client = app.test_client()
-#      data = {
-#          "email": "test2@oxfordbjj.com",
-#          "password": "testPassword2$",
-#      }
-#      response = await test_client.post("/v1/staff/", json=data)
-#      payload = await response.get_json()
-#     #  async with test_client.authenticated(payload["id"]):  # type: ignore
-#      login_response = await staff_authenticated_client.post(
-#         "/v1/sessions/",
-#         json={"email": "test2@oxfordbjj.com", "password": "testPassword2$"},
-#         )
-#      assert login_response.status_code == 200
-
-#     #  access_token = (await login_response.get_json())["access_token"]
-#     #  test_client.headers.update({"Authorization": f"Bearer {access_token}"})
-
-#      response = await staff_authenticated_client.put(
-#              "/v1/staff/password/",
-#              json={
-#                  "currentPassword": data["password"],
-#                  "newPassword": "testPassword3$",
-#              }
-#          )
-#      assert response.status_code == 200
-#      assert "Sending password_changed.html to test2@oxfordbjj.com" in caplog.text
-
-
 async def test_forgotten_password(app: Quart, caplog: pytest.LogCaptureFixture) -> None:
     test_client = app.test_client()
-    data = {"email": "test@oxfordbjj.com"}
+    data = {"email": "test@crmapp.com"}
     response = await test_client.put("/v1/staff/forgotten-password/", json=data)
     assert response.status_code == 200
-    assert "Sending forgotten_password.html to test@oxfordbjj.com" in caplog.text
+    assert "Sending forgotten_password.html to test@crmapp.com" in caplog.text

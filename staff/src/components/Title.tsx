@@ -6,7 +6,7 @@ interface IProps {
 const Title = ({ title }: IProps) => (
   <>
     <Helmet>
-      <title>BJJ App | {title}</title>
+      <title>CRM App | {title}</title>
     </Helmet>
     <Typography component="h1" variant="h5">
       {title}
